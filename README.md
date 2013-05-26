@@ -4,7 +4,7 @@ tcptest is following Perl's "Test::TCP".
 
 It has the methods like original one, but also has another TestServer implementation.
 
-This package also includes tcptest.memcached module like "Test::Memcached".
+This package also includes memcached and redis test server support.
 
 ## SYNOPSIS
 
@@ -14,6 +14,10 @@ import tcptest.memcached
 # with context
 with tcptest.memcached.Server() as server:
     memd = memcache.Client(['127.0.0.1:%d' % server.port])
+    ...
+
+with tcptest.redis.Server() as server:
+    db = redis.Redis(host='127.0.0.1', port=server.port, db=0)
     ...
 
 # manually handling

@@ -3,11 +3,11 @@ from setuptools import setup
 setup(
     name='tcptest',
     packages=['tcptest'],
-    version='0.1.0',
+    version='0.2.0',
     author='Ryo Miyake',
     author_email='ryo.studiom@gmail.com',
     description="Testing TCP program, following the Perl's Test::TCP "
-                "and Test::Memcached",
+                "include memcached and redis test server.",
     url='http://github.com/nekoya/python-tcptest',
     license='MIT',
     install_requires=['python-memcached'],
