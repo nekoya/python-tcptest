@@ -11,7 +11,7 @@ setup(
     url='http://github.com/nekoya/python-tcptest',
     license='MIT',
     install_requires=['python-memcached'],
-    tests_require=['Nose'],
+    tests_require=['Nose', 'redis'],
     test_suite='nose.collector',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
