@@ -13,6 +13,7 @@ SYNOPSIS
 .. code-block:: python
 
   import tcptest.memcached
+  import tcptest.redis
   
   # with context
   with tcptest.memcached.Server() as server:
@@ -45,6 +46,14 @@ SEE ALSO
 
 - http://search.cpan.org/~tokuhirom/Test-TCP/
 - http://search.cpan.org/~dmaki/Test-Memcached/
+
+CHANGES
+-------
+
+0.2.0 - 2013/05/21
+  - Support Redis test server
+0.1.0 - 2013/05/21
+  - First release
 
 Travis
 ------
