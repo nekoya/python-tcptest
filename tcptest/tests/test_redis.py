@@ -4,6 +4,7 @@ from nose.tools import ok_, eq_, raises
 import tcptest.redis
 
 import redis
+import time
 
 
 class TestContext(object):
@@ -24,3 +25,40 @@ class TestContext(object):
                              db=9)  # too large db number
             ok_(db.set('foo', 'bar'))
             ok_(db.get('foo'), 'bar')
+
+
+class TestReplication(object):
+    def setup(self):
+        self.master = tcptest.redis.Server()
+        self.master.start()
+
+        slave_settings = {'slaveof': 'localhost %d' % self.master.port}
+        self.slave = tcptest.redis.Server(settings=slave_settings)
+        self.slave.start()
+
+    def teardown(self):
+        self.slave.stop()
+        self.master.stop()
+
+    def test_replication(self):
+        master = redis.Redis(host='127.0.0.1', port=self.master.port, db=0)
+        slave = redis.Redis(host='127.0.0.1', port=self.slave.port, db=0)
+
+        # wait replication link
+        max = 20
+        for i in range(max):
+            time.sleep(0.01)
+            if slave.info()['master_link_status'] == 'up':
+                break
+        if i + 1 == max:
+            raise Exception('slave does not work well')
+
+        eq_(master.info()['connected_slaves'], 1)
+        eq_(master.info()['slave0'], '127.0.0.1,%d,online' % self.slave.port)
+        eq_(slave.info()['master_port'], self.master.port)
+        eq_(slave.info()['role'], 'slave')
+        eq_(slave.info()['master_link_status'], 'up')
+
+        ok_(master.set('foo', 'bar'))
+        eq_(master.get('foo'), 'bar')
+        eq_(slave.get('foo'), 'bar')
