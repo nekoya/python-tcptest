@@ -51,9 +51,14 @@ CHANGES
 -------
 
 0.2.0 - 2013/05/21
-  - Support Redis test server
+~~~~~~~~~~~~~~~~~~
+
+- Support Redis test server
+
 0.1.0 - 2013/05/21
-  - First release
+~~~~~~~~~~~~~~~~~~
+
+- First release
 
 Travis
 ------
