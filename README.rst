@@ -29,8 +29,15 @@ SYNOPSIS
   server.start()
   ...
   server.stop()
-  
-  # custom server
+
+TIPS
+----
+
+custom server
+~~~~~~~~~~~~~
+
+.. code-block:: python
+
   import tcptest
   
   class YourTestServer(tcptest.TestServer):
@@ -40,6 +47,43 @@ SYNOPSIS
   with YourTestServer() as server:
       # your server works on server.port
       ...
+
+capture server outputs
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+  import tcptest.redis
+  
+  res = {}
+  with tcptest.redis.Server(res=res) as server:
+      ...
+  stdout = res['stdout']
+  stderr = res['stderr']
+
+redis options
+~~~~~~~~~~~~~
+
+.. code-block:: python
+
+  import tcptest.redis
+  
+  with tcptest.redis.Server(settings=dict(databases=4)) as server:
+      ...
+
+redis replication
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+  import tcptest.redis
+  
+  master = tcptest.redis.Server()
+  master.start()
+
+  slave_settings = {'slaveof': 'localhost %d' % master.port}
+  slave = tcptest.redis.Server(settings=slave_settings)
+  slave.start()
 
 SEE ALSO
 --------
