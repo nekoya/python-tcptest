@@ -90,6 +90,7 @@ class TestServer(object):
     def start(self):
         '''start test server'''
         self.port = empty_port()
+        self._before_start()
         cmd = self.build_command()
         self._proc = subprocess.Popen(cmd,
                                       stdout=subprocess.PIPE,
@@ -99,11 +100,30 @@ class TestServer(object):
         except Exception, e:
             self.stop()
             raise e
+        self._after_start()
 
     def stop(self):
         '''stop test server'''
+        self._before_stop()
         self._proc.terminate()
         self._wait()
+        self._after_stop()
+
+    def _before_start(self):
+        '''hook event'''
+        pass
+
+    def _after_start(self):
+        '''hook event'''
+        pass
+
+    def _before_stop(self):
+        '''hook event'''
+        pass
+
+    def _after_stop(self):
+        '''hook event'''
+        pass
 
     def _wait(self):
         try:
