@@ -10,6 +10,8 @@ This package also includes memcached and redis test server support.
 SYNOPSIS
 --------
 
+.. code-block:: python
+
   import tcptest.memcached
   
   # with context
