@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='tcptest',
     packages=['tcptest'],
-    version='0.2.0',
+    version='0.2.1',
     author='Ryo Miyake',
     author_email='ryo.studiom@gmail.com',
     description="Testing TCP program, following the Perl's Test::TCP "
