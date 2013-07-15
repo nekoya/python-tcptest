@@ -94,6 +94,17 @@ SEE ALSO
 CHANGES
 -------
 
+0.2.4 - 2013/07/16
+~~~~~~~~~~~~~~~~~~
+
+- Fix pip installation
+    - Add MANIFEST.in
+
+0.2.1-3 - 2013/05/27
+~~~~~~~~~~~~~~~~~~~~
+
+- Maintain setup.py and docs
+
 0.2.0 - 2013/05/21
 ~~~~~~~~~~~~~~~~~~
 
