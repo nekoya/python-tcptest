@@ -19,27 +19,27 @@ class Server(TestServer):
         self.settings = settings or {}
 
     def build_command(self):
-        return ('redis-server', self.conffile)
+        args = ['redis-server']
+        for (k, v) in self.settings.items():
+            args.append('--%s' % k)
+            args.extend(str(v).split(' '))
+        return tuple(args)
 
     def _before_start(self):
-        tmpdir = tempfile.gettempdir()
-        now = int(time.time() * 1000)
-        self.conffile = os.path.join(tmpdir, 'redis-%d.conf' % now)
-        self.dbfile = os.path.join(tmpdir, 'redis-%d.rdb' % now)
-        settings = {
-            'port': self.port,
-            'databases': 16,
-            'dir': tmpdir,
-            'dbfilename': self.dbfile,
-        }
-        settings.update(self.settings)
-        with open(self.conffile, 'w+') as f:
-            for (k, v) in settings.items():
-                f.write('%s %s\n' % (k, v))
+        self.settings['port'] = self.port
+
+        if 'databases' not in self.settings:
+            self.settings['databases'] = 16
+
+        if 'dir' not in self.settings:
+            self.settings['dir'] = tempfile.gettempdir()
+
+        if 'dbfilename' not in self.settings:
+            now = int(time.time() * 1000)
+            self.settings['dbfilename'] = 'redis-%d.rdb' % now
 
     def _after_stop(self):
-        def rm(file):
-            if os.path.exists(file):
-                os.remove(file)
-        rm(self.dbfile)
-        rm(self.conffile)
+        dbfilename = os.path.join(self.settings['dir'],
+                                  self.settings['dbfilename'])
+        if os.path.exists(dbfilename):
+            os.remove(dbfilename)
