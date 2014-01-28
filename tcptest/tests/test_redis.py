@@ -54,7 +54,14 @@ class TestReplication(object):
             raise Exception('slave does not work well')
 
         eq_(master.info()['connected_slaves'], 1)
-        eq_(master.info()['slave0'], '127.0.0.1,%d,online' % self.slave.port)
+        info_slave0 = master.info()['slave0']
+        if isinstance(info_slave0, dict):
+            eq_(info_slave0['ip'], '::1')
+            eq_(info_slave0['state'], 'online')
+            eq_(info_slave0['port'], self.slave.port)
+        else:
+            eq_(info_slave0, '127.0.0.1,%d,online' % self.slave.port)
+
         eq_(slave.info()['master_port'], self.master.port)
         eq_(slave.info()['role'], 'slave')
         eq_(slave.info()['master_link_status'], 'up')
