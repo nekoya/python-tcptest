@@ -94,6 +94,13 @@ SEE ALSO
 CHANGES
 -------
 
+0.3.0 - 2014/01/28
+~~~~~~~~~~~~~~~~~~
+
+- Update tcptest.redis
+    - pass command args instead of conf file (require redis-server 2.6 or later)
+    - cannot overwrite the server port
+
 0.2.4 - 2013/07/16
 ~~~~~~~~~~~~~~~~~~
 
