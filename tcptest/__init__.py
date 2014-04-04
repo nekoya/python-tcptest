@@ -1,5 +1,5 @@
-#-*- coding: utf-8 -*-
-'''
+# -*- coding: utf-8 -*-
+"""
 tcptest
 ~~~~~~~
 
@@ -15,7 +15,7 @@ This package also includes tcptest.memcached module like "Test::Memcached".
 
 :author: nekoya <http://nekoya.github.io/>
 :license: the MIT License: http://www.opensource.org/licenses/mit-license.php
-'''
+"""
 
 __version__ = '0.3.0'
 
@@ -25,10 +25,10 @@ import time
 
 
 def empty_port():
-    '''Find an empty port
+    """Find an empty port
     Returns:
         <int> empty port
-    '''
+    """
     s = socket.socket()
     s.bind(('', 0))
     (host, port) = s.getsockname()
@@ -37,11 +37,11 @@ def empty_port():
 
 
 def wait_port(port, timeout=3.0):
-    '''Wait until the port can use
+    """Wait until the port can use
     Args:
         <int> port
         <float> timeout(optional)
-    '''
+    """
     begin = time.time()
 
     def get_rest_time():
@@ -69,26 +69,26 @@ def _check_port(port, timeout):
 
 
 class TestServer(object):
-    '''Test server abstract class'''
+    """Test server abstract class"""
 
     def __init__(self, timeout=3.0, res=None):
-        '''
+        """
         Args:
             <float> timeout(optional)
             <dict> stdout/stderr buffer(optional)
-        '''
+        """
         self.timeout = timeout
         self.res = res
 
     def build_command(self):
-        '''
+        """
         Returns:
             <tuple> arguments for popen
-        '''
+        """
         return ()
 
     def start(self):
-        '''start test server'''
+        """start test server"""
         self.port = empty_port()
         self._before_start()
         cmd = self.build_command()
@@ -103,26 +103,26 @@ class TestServer(object):
         self._after_start()
 
     def stop(self):
-        '''stop test server'''
+        """stop test server"""
         self._before_stop()
         self._proc.terminate()
         self._wait()
         self._after_stop()
 
     def _before_start(self):
-        '''hook event'''
+        """hook event"""
         pass
 
     def _after_start(self):
-        '''hook event'''
+        """hook event"""
         pass
 
     def _before_stop(self):
-        '''hook event'''
+        """hook event"""
         pass
 
     def _after_stop(self):
-        '''hook event'''
+        """hook event"""
         pass
 
     def _wait(self):

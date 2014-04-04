@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from nose.tools import ok_, eq_, assert_raises
 import tcptest

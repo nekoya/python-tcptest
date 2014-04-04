@@ -1,8 +1,8 @@
-#-*- coding: utf-8 -*-
-'''
+# -*- coding: utf-8 -*-
+"""
 tcptest.redis
 ~~~~~~~~~~~~~
-'''
+"""
 
 import tempfile
 import time
@@ -12,7 +12,7 @@ from . import TestServer
 
 
 class Server(TestServer):
-    '''Redis Test Server'''
+    """Redis Test Server"""
 
     def __init__(self, settings=None, *args, **kw):
         super(Server, self).__init__(*args, **kw)
