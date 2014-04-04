@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='tcptest',
     packages=['tcptest'],
-    version='0.3.0',
+    version='0.4.0',
     author='Ryo Miyake',
     author_email='ryo.studiom@gmail.com',
     description="Testing TCP program, following the Perl's Test::TCP "
@@ -11,7 +11,7 @@ setup(
     long_description=open('README.rst').read(),
     url='http://github.com/nekoya/python-tcptest',
     license='MIT',
-    tests_require=['Nose', 'python-memcached', 'redis'],
+    tests_require=['Nose', 'python-memcached', 'redis', 'fluent-logger'],
     test_suite='nose.collector',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
