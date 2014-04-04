@@ -14,6 +14,7 @@ SYNOPSIS
 
   import tcptest.memcached
   import tcptest.redis
+  import tcptest.fluentd
   
   # with context
   with tcptest.memcached.Server() as server:
@@ -23,6 +24,15 @@ SYNOPSIS
   with tcptest.redis.Server() as server:
       db = redis.Redis(host='127.0.0.1', port=server.port, db=0)
       ...
+  
+  with tcptest.fluentd.Server() as server:
+      import fluentd.sender
+      import fluentd.event
+      fluent.sender.setup('app', port=server.port)
+      fluent.event.Event('follow', {'foo': 'bar'})
+      fluent.event.Event('label', {'hoge': 'fuga'})
+  print server.logs
+  # [('app.follow:', {u'foo': u'bar'}), ('app.label:', {u'hoge': u'fuga'})]
   
   # manually handling
   server = tcptest.memcached.Server()
@@ -93,6 +103,11 @@ SEE ALSO
 
 CHANGES
 -------
+
+0.4.0 - 2014/04/05
+~~~~~~~~~~~~~~~~~~
+
+- Support fluentd test server
 
 0.3.0 - 2014/01/28
 ~~~~~~~~~~~~~~~~~~

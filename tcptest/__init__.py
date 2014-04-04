@@ -17,7 +17,7 @@ This package also includes tcptest.memcached module like "Test::Memcached".
 :license: the MIT License: http://www.opensource.org/licenses/mit-license.php
 """
 
-__version__ = '0.3.0'
+__version__ = '0.4.0'
 
 import socket
 import subprocess
