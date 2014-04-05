@@ -45,7 +45,7 @@ class TestReplication(object):
         slave = redis.Redis(host='127.0.0.1', port=self.slave.port, db=0)
 
         # wait replication link
-        max = 20
+        max = 40
         for i in range(max):
             time.sleep(0.01)
             if slave.info()['master_link_status'] == 'up':
