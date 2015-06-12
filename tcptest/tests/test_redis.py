@@ -26,6 +26,13 @@ class TestContext(object):
             ok_(db.set('foo', 'bar'))
             ok_(db.get('foo'), 'bar')
 
+    def test_invalid_conf(self):
+        server = tcptest.redis.Server(settings={'host':'127.0.0.1', 'invalidparam':'123456'})
+        try:
+            server.start()
+        except Exception as e:
+            ok_(e.message['stderr'].endswith('Bad directive or wrong number of arguments\n'))
+
 
 class TestReplication(object):
     def setup(self):

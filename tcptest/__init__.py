@@ -71,7 +71,7 @@ def _check_port(port, timeout):
 class TestServer(object):
     """Test server abstract class"""
 
-    def __init__(self, timeout=3.0, res=None):
+    def __init__(self, timeout=3.0, res=None, waiting_returncode_time=0.1):
         """
         Args:
             <float> timeout(optional)
@@ -79,6 +79,7 @@ class TestServer(object):
         """
         self.timeout = timeout
         self.res = res
+        self.waiting_returncode_time = waiting_returncode_time
 
     def build_command(self):
         """
@@ -95,6 +96,15 @@ class TestServer(object):
         self._proc = subprocess.Popen(cmd,
                                       stdout=subprocess.PIPE,
                                       stderr=subprocess.PIPE)
+        time.sleep(self.waiting_returncode_time)
+        if self._proc.poll():
+            err = {
+                'stdout': ''.join(self._proc.stdout.readlines()),
+                'stderr': ''.join(self._proc.stderr.readlines())
+            }
+            self.stop()
+            raise Exception(err)
+
         try:
             wait_port(port=self.port, timeout=self.timeout)
         except Exception, e:
@@ -105,7 +115,8 @@ class TestServer(object):
     def stop(self):
         """stop test server"""
         self._before_stop()
-        self._proc.terminate()
+        if not self._proc.poll():
+            self._proc.terminate()
         self._wait()
         self._after_stop()
 
