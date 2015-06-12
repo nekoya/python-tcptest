@@ -104,6 +104,11 @@ SEE ALSO
 CHANGES
 -------
 
+0.5.0 - 2015/06/12
+~~~~~~~~~~~~~~~~~~
+
+- Improve error handling (thanks okamuuu)
+
 0.4.0 - 2014/04/05
 ~~~~~~~~~~~~~~~~~~
 
