@@ -52,7 +52,7 @@ def wait_port(port, timeout=3.0):
         try:
             _check_port(port, timeout=get_rest_time())
             break
-        except Exception, e:
+        except Exception as e:
             if get_rest_time() == 0:
                 raise Exception('connect to port:%s timed out. %s' % (port, e))
             wait *= 2
@@ -98,16 +98,18 @@ class TestServer(object):
                                       stderr=subprocess.PIPE)
         time.sleep(self.waiting_returncode_time)
         if self._proc.poll():
+            stdout = [l.decode() for l in self._proc.stdout.readlines()]
+            stderr = [l.decode() for l in self._proc.stderr.readlines()]
             err = {
-                'stdout': ''.join(self._proc.stdout.readlines()),
-                'stderr': ''.join(self._proc.stderr.readlines())
+                'stdout': ''.join(stdout),
+                'stderr': ''.join(stderr)
             }
             self.stop()
             raise Exception(err)
 
         try:
             wait_port(port=self.port, timeout=self.timeout)
-        except Exception, e:
+        except Exception as e:
             self.stop()
             raise e
         self._after_start()

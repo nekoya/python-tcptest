@@ -32,7 +32,8 @@ class Server(TestServer):
         if self.res is None:
             self.res = {}
         self.conffile = tempfile.NamedTemporaryFile(delete=False)
-        self.conffile.write(config_template % {'port': self.port})
+        config = config_template % {'port': self.port}
+        self.conffile.write(config.encode())
         self.conffile.close()
 
     def _before_stop(self):
@@ -43,6 +44,6 @@ class Server(TestServer):
             os.remove(self.conffile.name)
 
         self.logs = []
-        for line in self.res['stdout'].rstrip('\n').split('\n'):
+        for line in self.res['stdout'].decode().rstrip('\n').split('\n'):
             elms = line.split(' ')
             self.logs.append((elms[3], json.loads(elms[4])))
