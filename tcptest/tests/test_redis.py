@@ -63,7 +63,7 @@ class TestReplication(object):
         eq_(master.info()['connected_slaves'], 1)
         info_slave0 = master.info()['slave0']
         if isinstance(info_slave0, dict):
-            eq_(info_slave0['ip'], '::1')
+            ok_(info_slave0['ip'] in ('::1', '127.0.0.1'))
             eq_(info_slave0['state'], 'online')
             eq_(info_slave0['port'], self.slave.port)
         else:
