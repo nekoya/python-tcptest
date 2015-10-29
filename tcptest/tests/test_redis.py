@@ -14,8 +14,8 @@ class TestContext(object):
             db = redis.Redis(host='127.0.0.1', port=server.port, db=0)
             ok_(db.hset('hash', 'foo', 'bar'))
             ok_(db.hset('hash', 'hoge', 'fuga'))
-            eq_(db.hgetall('hash'), {'foo': 'bar', 'hoge': 'fuga'})
-        ok_(res['stdout'].endswith('bye bye...\n'))
+            eq_(db.hgetall('hash'), {b'foo': b'bar', b'hoge': b'fuga'})
+        ok_(res['stdout'].endswith(b'bye bye...\n'))
 
     @raises(redis.ResponseError)
     def test_custom_conf(self):
@@ -31,7 +31,7 @@ class TestContext(object):
         try:
             server.start()
         except Exception as e:
-            ok_(e.message['stderr'].endswith('Bad directive or wrong number of arguments\n'))
+            ok_(e.args[0]['stderr'].endswith('Bad directive or wrong number of arguments\n'))
 
 
 class TestReplication(object):
@@ -74,5 +74,5 @@ class TestReplication(object):
         eq_(slave.info()['master_link_status'], 'up')
 
         ok_(master.set('foo', 'bar'))
-        eq_(master.get('foo'), 'bar')
-        eq_(slave.get('foo'), 'bar')
+        eq_(master.get('foo'), b'bar')
+        eq_(slave.get('foo'), b'bar')
