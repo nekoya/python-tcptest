@@ -8,7 +8,7 @@ import tempfile
 import time
 import os
 
-from . import TestServer
+from . import empty_port, TestServer
 
 
 class Server(TestServer):
@@ -26,6 +26,15 @@ class Server(TestServer):
         return tuple(args)
 
     def _before_start(self):
+        # Redis Cluster also uses the port +10000.
+        #
+        # For example start redis-server with port 6379,
+        # cluser communicates through port 16379.
+        #
+        # http://redis.io/topics/cluster-spec
+        while self.port >= 55535:
+            self.port = empty_port()
+
         self.settings['port'] = self.port
 
         if 'databases' not in self.settings:
