@@ -104,6 +104,12 @@ SEE ALSO
 CHANGES
 -------
 
+0.6.0 - 2015/10/29
+~~~~~~~~~~~~~~~~~~
+
+- Support Python3 (thanks ikegami-yukino)
+- Improve redis-server port reserve, to support redis cluster
+
 0.5.0 - 2015/06/12
 ~~~~~~~~~~~~~~~~~~
 
