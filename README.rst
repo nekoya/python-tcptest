@@ -31,7 +31,7 @@ SYNOPSIS
       fluent.sender.setup('app', port=server.port)
       fluent.event.Event('follow', {'foo': 'bar'})
       fluent.event.Event('label', {'hoge': 'fuga'})
-  print server.logs
+  print(server.logs)
   # [('app.follow:', {u'foo': u'bar'}), ('app.label:', {u'hoge': u'fuga'})]
   
   # manually handling
